@@ -1,16 +1,17 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.awt.Color;
+import java.util.Random;
 /**
- * The KilgoreTrout class can be used as a model for your own class that represents you and your seating location in AP CSA
+ *
  * 
- * @author Mr. Kaehms
- * @version 2.0 Aug 13, 2019
+ * @author Aarush Aitha, CSA Per. 3
+ * @version 2.0 Aug 16, 2019
  */
-public class KilgoreTrout extends Student implements SpecialInterestOrHobby
+public class AarushAitha extends Student implements SpecialInterestOrHobby
 {
 
     /**
-     * Constructor for the KilgoreTrout class.
+     * Constructor for the AarushAitha class.
      * Constructors are special methods with the same exact name as the class name.  
      * Constructors to not have return types.
      * Constructors can be overloaded. This means we can call a constructor with different sets of parameter
@@ -21,7 +22,7 @@ public class KilgoreTrout extends Student implements SpecialInterestOrHobby
      * @param int s (seat number within row seating arrangement)
      * 
      */
-    public KilgoreTrout(String f, String l, int r, int s) {
+    public AarushAitha(String f, String l, int r, int s) {
         firstName=f;
         lastName=l;
         myRow=r;
@@ -37,21 +38,21 @@ public class KilgoreTrout extends Student implements SpecialInterestOrHobby
      * Pay attention to how the row and seat variables set the location of the image.  1,1 is the first cell in the upper left
      * of the classroom.
      */
-    public KilgoreTrout() {
-        firstName="Kilgore";
-        lastName="Trout";
-        myRow=98;
-        mySeat=98;
+    public AarushAitha() {
+       firstName="Aarush";
+       lastName="Aitha";
+       myRow=1;
+       mySeat=1;
        // imgFile=firstName.toLowerCase()+ lastName.toLowerCase()+".jpg";
        portraitFile=firstName.toLowerCase()+ lastName.toLowerCase()+".jpg";
        standingFile=firstName.toLowerCase()+ lastName.toLowerCase()+"-standing.jpg";
-        soundFile=firstName.toLowerCase()+ lastName.toLowerCase()+".wav";
-        setImage(portraitFile);
-        sitting=true;
+       soundFile=firstName.toLowerCase()+ lastName.toLowerCase()+".wav";
+       setImage(portraitFile);
+       sitting=true;
     }
     
      /**
-     * Act - do whatever the KilgoreTrout actor wants to do. This method is called whenever
+     * Act - do whatever the AarushAitha actor wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */   
     public void act() 
@@ -65,7 +66,7 @@ public class KilgoreTrout extends Student implements SpecialInterestOrHobby
                 getName();
                 sayName(soundFile);
             
-                myHobby("I like to time travel!");
+                myHobby("I like to program!");
             // Create a "special method for your class and put the call here.  You can twirl your image, resize it, move it around, change transparancy, or a 
             // combination of all of those types of actions, or more. Make sure to save the original image if you manipulate it, so that you can put it back.
             // Call the sitDown() method to move back  to your seat
@@ -93,49 +94,57 @@ public class KilgoreTrout extends Student implements SpecialInterestOrHobby
      * classes, make sure to fully document so other students can use the same interface.
      */
     public void answerQuestion(){
-        String q=Greenfoot.ask("What would you like to know");
-        if (q.contains("hard")){
-            q=Greenfoot.ask("2D arrays, recursion, and merge sort... May I sit down?");
-        
+        String q=Greenfoot.ask("What would you like to know?");
+        boolean flag = true;
+        while (flag)
+        {
+            if (q.contains("hard")){
+                q=Greenfoot.ask("2D arrays, recursion, and merge sort... May I sit down?");
+                flag = false;
+            }
+            else if (q.contains("easy")){
+                q=Greenfoot.ask("for and while loops, variables, and array lists... May I sit down?");
+                flag = false;
+            }
+            else {
+                q=Greenfoot.ask("I don't understand the question! What would you like to know?"); 
+            }
         }
-        else {
-          q=Greenfoot.ask("I don't understand the question... May I sit down?"); 
+        flag = true;
+        while (flag){
+            if (q.equals("yes")){
+                sitDown();
+                flag = false;
+            }
+            else {
+                q=Greenfoot.ask("Please! May I sit down?");
+            }
         }
-         if (q.equals("yes")){
-            Greenfoot.delay(10);
-            sitDown();
-        }
-        
     }
     /**
-     * This is a local method specific to the KilgoreTrout class used to animate the character once the image is clicked on.
+     * This is a local method specific to the AarushAitha class used to animate the character once the image is clicked on.
      * You can write your own methods to perform your own animation for your character/avatar.
      */
     public void circleClass(){
-        setLocation(0,0);
-         Greenfoot.delay(10);
-        // move right
-        for (int i=1;i<=9;i++){
-            setLocation(i,0);
-            Greenfoot.delay(10);
+        int[][] coords = new int[50][2];
+        for (int row = 0; row < coords.length; row++) {
+            for (int col = 0; col < coords[row].length; col++) {
+                if (col == 0){
+                    coords[row][col] = (int)(Math.random() * 9 + 1);
+                }
+                if (col == 1){
+                    coords[row][col] = (int)(Math.random() * 5 + 1);
+                }
+            }
         }
-        // move back
-        for (int i=1;i<=5;i++){
-            setLocation(9,i);
-            Greenfoot.delay(10);
-        }      
-         // move left
-        for (int i=9;i>=0;i--){
-            setLocation(i,5);
-            Greenfoot.delay(10);
-        }      
-              // move Forward
-        for (int i=5;i>=0;i--){
-            setLocation(0,i);
-            Greenfoot.delay(10);
-        }   
-           Greenfoot.delay(20);
-           returnToSeat();
+        for (int row = 0; row < coords.length; row++) {
+            setLocation(coords[row][0], coords[row][1]);
+            getImage().rotate((int)(Math.random() * 360 + 1));
+            Greenfoot.delay(5);
+        }
+        setImage(standingFile);
+        Greenfoot.delay(2);
+        returnToSeat();
     }
      public void myHobby(String s) {
          System.out.println(s);
